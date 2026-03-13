@@ -1,5 +1,10 @@
 # SovereignGuard
 
+![Tests](https://img.shields.io/badge/tests-79%20passed-brightgreen)
+![License](https://img.shields.io/badge/license-BSL%201.1-blue)
+![Python](https://img.shields.io/badge/python-3.11-blue)
+![EMEA](https://img.shields.io/badge/built%20for-EMEA-orange)
+
 SovereignGuard is an open source AI privacy gateway that sits between your application and an external LLM provider, detects personally identifiable information, replaces it with reversible tokens, forwards only the tokenized payload, then restores the original values in the model response before returning data to your app.
 
 The goal is simple: let teams ship LLM features without sending raw customer PII to OpenAI, Anthropic, Mistral, or any other upstream model API.
